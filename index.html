@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      height: 100%;
+      font-family: sans-serif;
+    }
+  </style>
+  <link rel="preload" href="/styles/tailwind.css" as="style">
+</head>
+<body>
+  <section id="app" class="h-full">
+    <header></header>
+    <main class="outlet h-full bg-teal-100"></main>
+  </section>
+  <script type="module" src="./js/app.js"></script>
+  <link rel="stylesheet" href="/styles/tailwind.css">
+</body>
+</html>

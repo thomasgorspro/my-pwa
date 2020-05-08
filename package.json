@@ -1,0 +1,22 @@
+{
+  "name": "pwa-td",
+  "version": "1.0.0",
+  "description": "Todo list",
+  "main": "index.js",
+  "dependencies": {
+    "idb": "^5.0.2",
+    "page": "^1.11.6",
+    "tailwindcss": "^1.4.4"
+  },
+  "devDependencies": {
+    "es-dev-server": "^1.48.1",
+    "json-server": "^0.16.1"
+  },
+  "scripts": {
+    "database": "npx json-server --watch data/db.json -p 2337",
+    "server": "es-dev-server --app-index index.html --node-resolve --watch -p 8000",
+    "css": "npx tailwindcss build ./styles/tailwind-import.css -o ./styles/tailwind.css"
+  },
+  "author": "",
+  "license": "ISC"
+}
