@@ -9,7 +9,10 @@ export default function Home(page, data) {
         <div class="mb-4">
             <h1 class="font-bold text-3xl text-gray-900">Todo List</h1>
             <form class="flex mt-4" id="addTodo">
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-gray-darker" placeholder="Add Todo">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="item-input">
+                Add an item
+              </label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-gray-darker" id="item-input" placeholder="Add Todo">
                 <button class="flex-no-shrink p-2 border-2 rounded text-teal-500 border-teal-500 hover:text-white hover:bg-teal-500">Add</button>
             </form>
         </div>
