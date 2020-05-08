@@ -5,7 +5,6 @@ export function fetchTodos() {
       "Content-Type": "application/json",
     },
   }).then((response) => response.json());
-  
 }
 
 export function addTodo(data) {
@@ -16,11 +15,11 @@ export function addTodo(data) {
     },
     body: JSON.stringify(data),
   })
-  .then((response) => response.json())
-  .catch(error => {
-    console.error(error);
-    return null;
-  });
+    .then((response) => response.json())
+    .catch((error) => {
+      console.error(error);
+      return null;
+    });
 }
 
 export function updateTodoStatus(data, id) {
@@ -29,11 +28,25 @@ export function updateTodoStatus(data, id) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify(data),
   })
-  .then((response) => response.json())
-  .catch(error => {
-    console.error(error);
-    return null;
-  });
+    .then((response) => response.json())
+    .catch((error) => {
+      console.error(error);
+      return null;
+    });
+}
+
+export function deleteTodo(id) {
+  return fetch(`http://localhost:2337/todos/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => console.log(response))
+    .catch((error) => {
+      console.error(error);
+      return null;
+    });
 }

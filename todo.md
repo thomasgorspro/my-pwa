@@ -20,4 +20,4 @@ Réaliser une PWA Todo list avec les fonctionnalité suivantes:
 npm install
 
 npm run database
-npm run server
+npm start

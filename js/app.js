@@ -1,6 +1,6 @@
 import page from "page";
-import { setTodos, setTodo, getTodos } from "./idb.js";
-import { fetchTodos, addTodo, updateTodoStatus } from './api/todo';
+import { setTodos, setTodo, getTodos, removeTodo } from "./idb.js";
+import { fetchTodos, addTodo, updateTodoStatus, deleteTodo } from './api/todo';
 import checkConnectivity from './network.js';
 
 checkConnectivity({});
@@ -54,6 +54,18 @@ page("/", async () => {
   //     await setTodo(detail);
   //     console.log('[todo] Todo updated offline');
   //   }
+  });
+
+  el.addEventListener('remove-todo', async ({ detail }) => {
+    if (!document.offline) {
+    const result = await deleteTodo(detail);
+      if(result !== null) {
+        await removeTodo(detail);
+      }
+    } else {
+      await removeTodo(detail);
+      console.log('[todo] Todo deleted offline');
+    }
   });
 });
 

@@ -50,7 +50,7 @@ export default function Home(page, data) {
     <div class="flex mb-4 items-center todo-item">
         <p class="w-full text-gray-900"></p>
         <button class="done-btn flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white"></button>
-        <button class="flex-no-shrink p-2 ml-2 border-2 rounded text-red-600 border-red-600 hover:text-white hover:bg-red-600">Remove</button>
+        <button class="delete-btn flex-no-shrink p-2 ml-2 border-2 rounded text-red-600 border-red-600 hover:text-white hover:bg-red-600">Remove</button>
     </div>
   `;
 
@@ -64,12 +64,18 @@ export default function Home(page, data) {
       title.innerHTML = item.title;
   
       const doneBtn = todoItem.querySelector('.done-btn');
-      doneBtn.addEventListener('click', e => {
+      doneBtn.addEventListener('click', () => {
         const check = {
           done: !item.done,
           id: item.id
         };
         const event = new CustomEvent('check-todo', { detail: check });
+        view.dispatchEvent(event);
+      });
+
+      const deleteBtn = todoItem.querySelector('.delete-btn');
+      deleteBtn.addEventListener('click', () => {
+        const event = new CustomEvent('remove-todo', {detail: item.id});
         view.dispatchEvent(event);
       });
   

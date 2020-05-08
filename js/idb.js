@@ -35,3 +35,8 @@ export async function getTodos() {
   const db = await initDB();
   return await db.getAll('todos');
 }
+
+export async function removeTodo(key) {
+  const db = await initDB();
+  return await db.delete('todos', key)
+}
