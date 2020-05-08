@@ -1,9 +1,9 @@
 module.exports = {
   purge: {
-    enabled: process.env.NODE_ENV === 'production' ? true : false,
+    enabled: true,
     content: [
       './**/*.html',
-      './**/*.js'
+      './js/views/*.js'
     ],
   },
   theme: {

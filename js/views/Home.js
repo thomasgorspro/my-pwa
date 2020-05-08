@@ -55,15 +55,23 @@ export default function Home(page, data) {
   `;
 
   const todoSelector = document.querySelector('#todo-list');
-    const todos = data.map(item => {
+    data.map(item => {
       const todoItem = constructorTodoItems
         .querySelector('.todo-item')
         .cloneNode(true);
-  
+      
       const title = todoItem.querySelector('p');
       title.innerHTML = item.title;
   
       const doneBtn = todoItem.querySelector('.done-btn');
+      doneBtn.addEventListener('click', e => {
+        const check = {
+          done: !item.done,
+          id: item.id
+        };
+        const event = new CustomEvent('check-todo', { detail: check });
+        view.dispatchEvent(event);
+      });
   
       if (item.done) {
         title.classList.add("text-green-500", "line-through");

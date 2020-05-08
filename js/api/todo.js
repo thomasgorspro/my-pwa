@@ -22,3 +22,18 @@ export function addTodo(data) {
     return null;
   });
 }
+
+export function updateTodoStatus(data, id) {
+  return fetch(`http://localhost:2337/todos/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data)
+  })
+  .then((response) => response.json())
+  .catch(error => {
+    console.error(error);
+    return null;
+  });
+}

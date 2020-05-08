@@ -1,27 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <style>
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-    }
-    html, body {
-      height: 100%;
-      font-family: sans-serif;
-    }
-  </style>
-  <link rel="preload" href="/styles/tailwind.css" as="style">
-</head>
-<body>
-  <section id="app" class="h-full">
-    <header></header>
-    <main class="outlet h-full bg-teal-100"></main>
-  </section>
-  <script type="module" src="./js/app.js"></script>
-  <link rel="stylesheet" href="/styles/tailwind.css">
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="manifest" href="/manifest.json">
+
+    <meta name="theme-color" content="#e6fffa">
+    <!-- Add to homescreen for Chrome on Android. Fallback for manifest.json -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Todo List">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Todo List">
+    <!-- Homescreen icons -->
+    <link rel="apple-touch-icon" href="/images/manifest/icon-48x48.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/manifest/icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="96x96" href="/images/manifest/icon-96x96.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/manifest/icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="/images/manifest/icon-192x192.png">
+
+    <!-- Tile icon for Windows 8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="/images/manifest/icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#42a5f5">
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <title data-base="Todo List">Todo List</title>
+    <meta name="description" content="The best todo list">
+    <noscript>Javascript is required</noscript>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          let refreshing = false;
+          let newWorker = null;
+          navigator.serviceWorker
+            .register("/service-worker.js", {
+              scope: "/",
+            })
+            .then(function (registration) {
+              setInterval(() => {
+                console.log("Checking for new service worker");
+                registration.update();
+              }, 10 * 1000);
+
+              if (registration.waiting && navigator.serviceWorker.controller) {
+                newWorker = registration.waiting;
+                const response = confirm(
+                  "A new version of your application is awaiable, would you like to update ?"
+                );
+                if (response) newWorker.postMessage({ type: "SKIP_WAITING" });
+              }
+
+              registration.addEventListener("updatefound", () => {
+                console.log("Service Worker update detected");
+                newWorker = registration.installing;
+                newWorker.addEventListener("statechange", () => {
+                  if (
+                    newWorker.state === "installed" &&
+                    navigator.serviceWorker.controller
+                  ) {
+                    const response = confirm(
+                      "A new version of your application is available, would you like to update ?"
+                    );
+                    if (response)
+                      newWorker.postMessage({ type: "SKIP_WAITING" });
+                  }
+                });
+              });
+
+              navigator.serviceWorker.addEventListener(
+                "controllerchange",
+                () => {
+                  if (refreshing) return;
+                  window.location.reload();
+                  refreshing = true;
+                }
+              );
+            });
+        });
+      } else {
+        console.log("Service worker not supported !!!!!!!!");
+      }
+    </script>
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        height: 100%;
+        font-family: sans-serif;
+      }
+    </style>
+    <link rel="preload" href="./styles/tailwind.css" as="style"/>
+  </head>
+  <body>
+    <section id="app" class="h-full">
+      <header></header>
+      <main class="outlet h-full bg-teal-100"></main>
+    </section>
+    <script type="module" src="./js/app.js"></script>
+    <link rel="stylesheet" href="./styles/tailwind.css">
+  </body>
 </html>

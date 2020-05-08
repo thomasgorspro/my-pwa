@@ -1,0 +1,21 @@
+{
+  "name": "Todo List",
+  "short_name": "Todo List",
+  "description": "The best todo list",
+  "icons": [
+    {
+      "src": "images/manifest/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/manifest/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/?pwa",
+  "display": "standalone",
+  "theme_color": "#313131",
+  "background_color": "#ffffff"
+}

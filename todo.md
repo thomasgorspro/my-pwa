@@ -15,3 +15,9 @@ Réaliser une PWA Todo list avec les fonctionnalité suivantes:
 * Tailwind CSS (https://tailwindcss.com/)
 * Page.js (https://visionmedia.github.io/page.js/)
 * Nano ID (https://github.com/ai/nanoid)
+
+## Get Started
+npm install
+
+npm run database
+npm run server

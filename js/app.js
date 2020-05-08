@@ -1,14 +1,10 @@
-"use strict";
 import page from "page";
 import { setTodos, setTodo, getTodos } from "./idb.js";
-import { fetchTodos, addTodo } from './api/todo';
+import { fetchTodos, addTodo, updateTodoStatus } from './api/todo';
 import checkConnectivity from './network.js';
 
-checkConnectivity({
-  interval: 2000
-});
+checkConnectivity({});
 document.addEventListener('connection-changed', e => {
-  let root = document.documentElement;
   document.offline = !e.detail;
   if (e.detail) {
     console.log('Back Online');
@@ -22,6 +18,7 @@ const app = document.querySelector("#app .outlet");
 page("/", async () => {
   const module = await import("./views/Home.js");
   const Home = module.default;
+
   let todos = [];
   if (!document.offline) {
     const data = await fetchTodos();
@@ -29,6 +26,7 @@ page("/", async () => {
   } else {
     todos = await getTodos();
   }
+
   const el = Home(app, todos);
   el.addEventListener('add-todo', async ({ detail }) => {
     if (!document.offline) {
@@ -41,6 +39,21 @@ page("/", async () => {
       await setTodo(detail);
       console.log('[todo] Todo created offline');
     }
+  });
+
+  el.addEventListener('check-todo', async ({ detail }) => {
+    // console.log(detail);
+    // console.log(id);
+  //   if (!document.offline) {
+      const result = await updateTodoStatus({done: detail.done}, detail.id);
+  //     if(result !== null) {
+  //       await setTodo(detail);
+  //     }
+  //   } else {
+  //     detail.synced = true;
+  //     await setTodo(detail);
+  //     console.log('[todo] Todo updated offline');
+  //   }
   });
 });
 
